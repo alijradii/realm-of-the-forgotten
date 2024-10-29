@@ -7,13 +7,18 @@ class MazeScene extends Phaser.Scene {
     this.cols;
     this.pathWidth;
     this.camera;
+    this.cursors;
   }
 
   preload() {
-    this.load.spritesheet("player", "./assets/images/Archer/Archer_Blue.png", {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
+    this.load.spritesheet(
+      "Archer_Blue",
+      "./assets/images/Archer/Archer_Blue.png",
+      {
+        frameWidth: 32,
+        frameHeight: 32,
+      },
+    );
 
     this.load.image("tiles", "assets/images/tileset-extruded.png");
   }
@@ -35,11 +40,13 @@ class MazeScene extends Phaser.Scene {
     tilemap.addTilesetImage("tiles", "tiles", 16, 16, 1, 2);
     const layer = tilemap.createLayer(0, "tiles", 0, 0);
 
-    this.player = this.add.sprite(32, 32, "player", 1);
-    this.camera = this.cameras.main;
+    initCursors(this);
 
-    initCursors();
+    this.player = new Player(this, 32, 32, "Blue", "Archer");
+    this.camera = this.cameras.main;
   }
 
-  update(time, delta) {}
+  update(time, delta) {
+    this.player.update();
+  }
 }

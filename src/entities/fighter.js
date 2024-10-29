@@ -13,4 +13,6 @@ class Fighter extends Entity {
     this.state = "idle";
     this.direction = "left";
   }
+
+  play() {}
 }
