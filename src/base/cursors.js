@@ -5,4 +5,7 @@ function initCursors(scene) {
     s: Phaser.Input.Keyboard.KeyCodes.S,
     d: Phaser.Input.Keyboard.KeyCodes.D,
   });
+
+  scene.input.on("pointerdown", this.onPointerDown, this);
+  scene.input.on("pointerup", this.onPointerUp, this);
 }
