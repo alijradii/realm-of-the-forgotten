@@ -3,6 +3,9 @@ class MazeScene extends Phaser.Scene {
     super({ key: "maze" });
 
     this.player;
+    this.rows;
+    this.cols;
+    this.pathWidth;
   }
 
   preload() {
@@ -13,6 +16,10 @@ class MazeScene extends Phaser.Scene {
   }
   create() {
     this.player = this.add.sprite(200, 200, "player", 1);
+
+    this.rows = 200;
+    this.cols = 200;
+    this.pathWidth = 5;
   }
   update(time, delta) {}
 }
