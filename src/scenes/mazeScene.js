@@ -37,6 +37,8 @@ class MazeScene extends Phaser.Scene {
 
     this.player = this.add.sprite(32, 32, "player", 1);
     this.camera = this.cameras.main;
+
+    initCursors();
   }
 
   update(time, delta) {}
