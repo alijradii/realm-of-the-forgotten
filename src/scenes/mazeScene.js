@@ -38,8 +38,11 @@ class MazeScene extends Phaser.Scene {
 
     this.player = new Player(this, 32, 32, "Blue", "Archer");
     this.camera = this.cameras.main;
+    this.camera.startFollow(this.player.sprite);
 
     layer.setCollision([12, 13, 14, 32, 33, 34, 52, 72]);
+
+    console.log(astar(maze, 32, 32, 11 * 16, 20 * 16));
   }
 
   update(time, delta) {

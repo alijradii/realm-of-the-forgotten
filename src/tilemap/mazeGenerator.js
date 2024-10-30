@@ -1,10 +1,3 @@
-const directions = [
-  [1, 0],
-  [-1, 0],
-  [0, 1],
-  [0, -1],
-];
-
 function generateMaze(rows, cols, pathWidth) {
   const stack = [[1, 1]];
   const maze = createGrid(rows, cols, 1);

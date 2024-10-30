@@ -1,6 +1,9 @@
+// source: geeks for geeks
+//
 class PriorityQueue {
-  constructor() {
+  constructor(compareFunction) {
     this.heap = [];
+    this.compare = compareFunction;
   }
 
   getLeftChildIndex(parentIndex) {
@@ -74,7 +77,10 @@ class PriorityQueue {
 
   heapifyUp() {
     let index = this.heap.length - 1;
-    while (this.hasParent(index) && this.parent(index) > this.heap[index]) {
+    while (
+      this.hasParent(index) &&
+      this.compare(this.parent(index), this.heap[index]) > 0
+    ) {
       this.swap(this.getParentIndex(index), index);
       index = this.getParentIndex(index);
     }
@@ -86,11 +92,11 @@ class PriorityQueue {
       let smallerChildIndex = this.getLeftChildIndex(index);
       if (
         this.hasRightChild(index) &&
-        this.rightChild(index) < this.leftChild(index)
+        this.compare(this.rightChild(index), this.leftChild(index)) < 0
       ) {
         smallerChildIndex = this.getRightChildIndex(index);
       }
-      if (this.heap[index] < this.heap[smallerChildIndex]) {
+      if (this.compare(this.heap[index], this.heap[smallerChildIndex]) < 0) {
         break;
       } else {
         this.swap(index, smallerChildIndex);
