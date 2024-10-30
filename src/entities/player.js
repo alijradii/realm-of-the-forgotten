@@ -10,9 +10,9 @@ class Player extends Fighter {
   update() {
     const speed = 100;
     let direction = this.direction;
-    this.state = "idle";
 
     if (this.state === "idle" || this.state === "walk") {
+      this.state = "idle";
       this.body.setVelocity(0);
 
       if (this.scene.cursors.left.isDown) {

@@ -13,3 +13,10 @@ const classes = [
 
 const WIDTH = 800;
 const HEIGHT = 600;
+
+const directions = [
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, -1],
+];
