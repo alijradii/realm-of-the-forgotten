@@ -24,18 +24,20 @@
     const { width, height } = this.scale;
 
     const characterPositions = [
-      { x: width / 4, y: height / 3 },
-      { x: width / 2, y: height / 3 },
-      { x: (3 * width) / 4, y: height / 3 },
-      { x: width, y: height / 3 },
-      { x: width / 4, y: (2 * height) / 3 },
-      { x: width / 2, y: (2 * height) / 3 },
-      { x: (3 * width) / 4, y: (2 * height) / 3 },
-      { x: width, y: (2 * height) / 3 },
+      { x: width / 5, y: height / 3 },          // Left-most character in top row
+      { x: (2 * width) / 5, y: height / 3 },    // 2nd character from left in top row
+      { x: (3 * width) / 5, y: height / 3 },    // Center character in top row
+      { x: (4 * width) / 5, y: height / 3 },    // 2nd from right in top row
+    
+      { x: width / 5, y: (2 * height) / 3 },    // Left-most character in bottom row
+      { x: (2 * width) / 5, y: (2 * height) / 3 }, // 2nd character from left in bottom row
+      { x: (3 * width) / 5, y: (2 * height) / 3 }, // Center character in bottom row
+      { x: (4 * width) / 5, y: (2 * height) / 3 }, // 2nd from right in bottom row
     ];
+    
 
 
-    this.add.text(width / 2, height / 6, 'Realm of the Forgotten', {
+    this.add.text(width / 2, height / 10, 'Realm of the Forgotten', {
       fontSize: '32px',
       color: '#000000'
     }).setOrigin(0.5);
