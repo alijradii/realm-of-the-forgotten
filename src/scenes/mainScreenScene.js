@@ -23,6 +23,19 @@
   create() {
     const { width, height } = this.scale;
 
+    // creating input section for username
+    const usernameInput = document.createElement("input");
+    usernameInput.type = "text";
+    usernameInput.placeholder = "Enter your username";
+    usernameInput.style.position = "absolute";
+    usernameInput.style.top = "50%";
+    usernameInput.style.left = "50%";
+    usernameInput.style.transform = "translate(-50%, -50%)";
+    usernameInput.style.fontSize = "20px";
+    usernameInput.style.padding = "5px";
+    document.querySelector(".container").appendChild(usernameInput);
+
+
     // width and height generated using chatgpt
     const characterPositions = [
       { x: width / 5, y: height / 3 },          // Left-most character in top row
@@ -68,6 +81,7 @@
         ease: 'Bounce.easeOut',
       });
 
+      // on click eventListener
       character.on("pointerdown", () => {
         this.selectCharacter(characterNames[i]);
         this.tweens.add({
@@ -78,13 +92,26 @@
           ease: 'Power2',
         });
       });
+
+      character.on("pointerdown", () => {
+        const username = usernameInput.value.trim();
+        if (username) {
+          // save username and character for later scenes
+          this.registry.set("username", username);
+          this.registry.set("selectedCharacter", characterNames[i]);
+          
+          usernameInput.remove();
+          this.scene.start("mazeScene"); 
+        } else {
+          alert("Please enter a username before selecting a character.");
+        }
+      });
     }
   }
 
   selectCharacter(characterKey) {
     console.log(`Selected character: ${characterKey}`);
-    // i can jump to the next scene
-    // this.scene.start("GameScene", { character: characterKey });
+
   }
 }
 
