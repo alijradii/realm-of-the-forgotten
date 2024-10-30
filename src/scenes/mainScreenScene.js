@@ -35,9 +35,12 @@
       { x: (4 * width) / 5, y: (2 * height) / 3 }, // 2nd from right in bottom row
     ];
     
+    const characterNames = [
+      "Archer", "Axe Fighter", "Axe Knight", "Lance Knight",
+      "Spear Fighter", "Sword Fighter", "Thief", "Wizard"
+    ];
 
-
-    this.add.text(width / 2, height / 10, 'Realm of the Forgotten', {
+    this.add.text(width / 2, height / 10, 'Choose Your Character', {
       fontSize: '32px',
       color: '#000000'
     }).setOrigin(0.5);
@@ -48,6 +51,13 @@
       const character = this.add.sprite(x, y, `character${i}`).setInteractive();
       character.setScale(3);
       this.characters.push(character);
+
+      this.add.text(x, y + 40, characterNames[i], {
+        fontSize: '16px',
+        color: '#000000',
+        align: 'center'
+      }).setOrigin(0.5);
+
 
       this.tweens.add({
         targets: character,
