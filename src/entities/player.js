@@ -3,34 +3,39 @@ class Player extends Fighter {
     super(scene, x, y, color, baseClass);
     this.cursors = cursors;
 
+    this.scene.physics.add.existing(this.sprite);
+
     this.scene.input.on("pointerdown", this.onPointerDown, this);
     this.scene.input.on("pointerup", this.onPointerUp, this);
+
+    this.speed = 200;
   }
 
   update() {
-    const speed = 100;
+    if (this.isLocked) return;
+
     let direction = this.direction;
 
     if (this.state === "idle" || this.state === "walk") {
       this.state = "idle";
+
       this.body.setVelocity(0);
 
       if (this.scene.cursors.left.isDown) {
-        this.body.setVelocityX(-speed);
+        this.body.setVelocityX(-this.speed);
         direction = "left";
         this.state = "walk";
-        console.log("down");
       } else if (this.scene.cursors.right.isDown) {
-        this.body.setVelocityX(speed);
+        this.body.setVelocityX(this.speed);
         direction = "right";
         this.state = "walk";
       }
       if (this.scene.cursors.up.isDown) {
-        this.body.setVelocityY(-speed);
+        this.body.setVelocityY(-this.speed);
         direction = "up";
         this.state = "walk";
       } else if (this.scene.cursors.down.isDown) {
-        this.body.setVelocityY(speed);
+        this.body.setVelocityY(this.speed);
         direction = "down";
         this.state = "walk";
       }
@@ -38,7 +43,7 @@ class Player extends Fighter {
       this.direction = direction;
     }
 
-    this.body.velocity.normalize().scale(speed);
+    this.body.velocity.normalize().scale(this.speed);
     this.play(`${this.state}_${this.direction}`, true);
   }
 
@@ -46,9 +51,7 @@ class Player extends Fighter {
     switch (pointer.button) {
       case 0:
         console.log("left click");
-        this.state = "attack";
-        this.body.setVelocity(0);
-        this.play(`${this.state}_${this.direction}`, true);
+        this.attack();
         break;
       case 1:
         console.log("middle click");
@@ -61,5 +64,32 @@ class Player extends Fighter {
 
   onPointerUp(pointer) {
     console.log(`mouse ${pointer.button} released`);
+  }
+
+  onTakeDamage() {
+    this.scene.cameras.main.shake(100, 0.005);
+  }
+
+  idle() {
+    this.state = "idle";
+  }
+
+  attack() {
+    if (this.state == "attack") return;
+
+    this.state = "attack";
+
+    this.body.setVelocity(0);
+    this.play(`attack_${this.direction}`, true);
+
+    this.sprite.on("animationcomplete", () => {
+      this.idle();
+    });
+
+    const targets = [this.scene.enemy];
+
+    this.scene.physics.overlap(this, targets, (attacker, target) => {
+      this.scene.enemy.getKnockback(this.sprite);
+    });
   }
 }

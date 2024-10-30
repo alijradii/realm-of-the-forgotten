@@ -8,6 +8,8 @@ class MazeScene extends Phaser.Scene {
     this.pathWidth;
     this.camera;
     this.cursors;
+    this.maze;
+    this.tiles;
   }
 
   preload() {
@@ -21,11 +23,11 @@ class MazeScene extends Phaser.Scene {
     this.cols = 200;
     this.pathWidth = 5;
 
-    const maze = generateMaze(this.rows, this.cols, this.pathWidth);
-    const tiles = replaceWalls(maze);
+    this.maze = generateMaze(this.rows, this.cols, this.pathWidth);
+    this.tiles = replaceWalls(this.maze);
 
     const tilemap = this.make.tilemap({
-      data: tiles,
+      data: this.tiles,
       tileWidth: 16,
       tileHeight: 16,
     });
@@ -36,16 +38,18 @@ class MazeScene extends Phaser.Scene {
 
     initCursors(this);
 
-    this.player = new Player(this, 32, 32, "Blue", "Archer");
+    this.player = new Player(this, 32, 32, "Blue", "SpearFighter");
+    this.enemy = new Enemy(this, 64, 64, "Thief");
     this.camera = this.cameras.main;
+    this.camera.zoom = 1.6;
     this.camera.startFollow(this.player.sprite);
 
     layer.setCollision([12, 13, 14, 32, 33, 34, 52, 72]);
-
-    console.log(astar(maze, 32, 32, 11 * 16, 20 * 16));
+    this.physics.add.collider(this.player, layer);
   }
 
   update(time, delta) {
     this.player.update();
+    this.enemy.update();
   }
 }

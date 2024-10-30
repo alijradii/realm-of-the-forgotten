@@ -7,9 +7,7 @@ function getKeyFromCoordinates(r, c) {
 }
 
 function getCoordinatesFromKey(key) {
-  console.log(key);
   const [r, c] = key.split(",").map(Number);
-
   return r, c;
 }
 
@@ -20,7 +18,6 @@ function reconstructPath(cameFrom, r, c) {
     [r, c] = cameFrom.get(getKeyFromCoordinates(r, c));
 
     path.push([r, c]);
-    console.log(`${r} ${c}`);
   }
 
   path.reverse();
