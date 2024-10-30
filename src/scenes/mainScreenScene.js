@@ -7,14 +7,14 @@
 
   // loading my sprites
   preload() {
-    this.load.spritesheet("character0", "./assets/images/Archer/Archer_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("character1", "./assets/images/AxeFighter/AxeFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("character2", "./assets/images/AxeKnight/AxeKnight_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("character3", "./assets/images/LanceKnight/LanceKnight_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("character4", "./assets/images/SpearFighter/SpearFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("character5", "./assets/images/SwordFighter/SwordFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("character6", "./assets/images/Thief/Thief_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("character7", "./assets/images/Wizard/Wizard_Blue.png", {frameWidth: 32,frameHeight: 32,});
+    this.load.spritesheet("Archer", "./assets/images/Archer/Archer_Blue.png", {frameWidth: 32,frameHeight: 32,});
+    this.load.spritesheet("Axe Fighter", "./assets/images/AxeFighter/AxeFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
+    this.load.spritesheet("Axe Knight", "./assets/images/AxeKnight/AxeKnight_Blue.png", {frameWidth: 32,frameHeight: 32,});
+    this.load.spritesheet("Lance Knight", "./assets/images/LanceKnight/LanceKnight_Blue.png", {frameWidth: 32,frameHeight: 32,});
+    this.load.spritesheet("Spear Fighter", "./assets/images/SpearFighter/SpearFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
+    this.load.spritesheet("Sword Fighter", "./assets/images/SwordFighter/SwordFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
+    this.load.spritesheet("Thief", "./assets/images/Thief/Thief_Blue.png", {frameWidth: 32,frameHeight: 32,});
+    this.load.spritesheet("Wizard", "./assets/images/Wizard/Wizard_Blue.png", {frameWidth: 32,frameHeight: 32,});
 
   }
 
@@ -23,6 +23,7 @@
   create() {
     const { width, height } = this.scale;
 
+    // width and height generated using chatgpt
     const characterPositions = [
       { x: width / 5, y: height / 3 },          // Left-most character in top row
       { x: (2 * width) / 5, y: height / 3 },    // 2nd character from left in top row
@@ -48,7 +49,7 @@
     this.characters = [];
     for (let i = 0; i < 8; i++) {
       const { x, y } = characterPositions[i];
-      const character = this.add.sprite(x, y, `character${i}`).setInteractive();
+      const character = this.add.sprite(x, y, characterNames[i]).setInteractive();
       character.setScale(3);
       this.characters.push(character);
 
@@ -68,7 +69,7 @@
       });
 
       character.on("pointerdown", () => {
-        this.selectCharacter(`character${i}`);
+        this.selectCharacter(characterNames[i]);
         this.tweens.add({
           targets: character,
           scale: 1.4,
