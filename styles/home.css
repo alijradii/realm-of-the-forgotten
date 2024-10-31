@@ -1,0 +1,198 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+
+
+  @font-face {
+    font-family: "Mona Sans";
+    src: url("./../../assets/fonts/mona_sans/Mona-Sans-Regular.ttf");
+  }
+  
+  @font-face {
+    font-family: "Mona Sans";
+    src: url("./../../assets/fonts/mona_sans/Mona-Sans-SemiBold.ttf");
+    font-weight: bold;
+  }
+  body{
+    font-family: 'Mona Sans',sans-serif;
+    background-color: #f3f3f6;
+  }
+
+  .navbar{
+
+    z-index: 1000;
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    opacity: 0.7;
+  }
+
+
+  .logo{
+    display: flex;
+    margin: 5px 5px;
+    width: 180px;
+    justify-content: space-around
+  }
+  .nav-text {
+    list-style-type:none;
+    font-family: 'Mona Sans',sans-serif;
+
+    gap: 200px;
+    font-size: 19px;
+    font-weight: 600;
+    justify-content: center;
+  }
+
+  .logo img {
+    height: 45px;
+    width: 45px;
+    position:relative;
+  }
+
+  .nav-text li:hover {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  .hero{
+    text-align: center;
+    color: black;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+  }
+
+
+  .image-text {
+    font-family: 'Games', sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 40px;
+    word-spacing: 3px;
+    letter-spacing: 2px;
+  }
+
+  .head{
+    width: 100%;
+    font-size: 70px;
+    font-weight: 900;
+  }
+
+  .play-btn{
+    font-family: 'Games', sans-serif;
+    width: 200px;
+    height: 50px;
+    font-size: x-large;
+    font-weight: 500;
+  }
+
+  .tutorial{
+    height: 185vh;
+  }
+
+  .tutorial-heading{
+    font-family: 'Games', sans-serif;
+    margin: 40px;
+    font-size:38px;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+
+  .cards{
+    justify-content: space-around;
+  }
+
+  .card{
+    width: 370px;
+    height: 500px;
+    padding: 20px 40px;
+    align-items: center;
+    
+    border-radius: 20px;
+    box-shadow: 3px 3px 3px 3px #86B049;
+  }
+
+  .card img{
+    width: 200px;
+    height: 200px;
+    
+  }
+  .pointer-cursor:hover{
+    cursor: pointer;
+    
+  }
+  .card h2{
+    font-size: 28px;
+  }
+
+  .card ul{
+    margin-top: 20px;
+    line-height: 26px;
+  }
+  .card:hover {
+    opacity: 0.9;
+    
+  }
+
+  .video-container{
+    padding: 20px 35px;
+    height: 100vh;
+  }
+
+  .video-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 0.6;
+  }
+
+  .about{
+    color: black;
+    padding: 100px 200px;
+    font-weight: 100;
+    height: 80vh;
+    gap: 60px;
+    font-size: xx-large;
+    text-align: center;
+  }
+
+  .about img{
+    width: 100px;
+    height: 100px;
+    
+  }
+
+  .footer{
+    height: 15vh;
+    background-color: black;
+    justify-content: space-evenly;
+    color: white;
+    padding: 3vh;
+  }
+
+  .footer ul {
+    list-style-type:none;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .spacing-letter{
+    letter-spacing: 3px;
+  }
