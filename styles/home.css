@@ -174,3 +174,9 @@
     height: 100px;
     
   }
+
+  .footer{
+    height: 15vh;
+    background-color: rgb(46, 48, 31);
+    justify-content: space-evenly;
+  }
