@@ -83,7 +83,7 @@ class MazeScene extends Phaser.Scene {
       (this.startCol + 1) * 16,
       (this.startRow + 1) * 16,
       "Blue",
-      "Archer"
+      "LanceKnight"
     );
 
     this.camera = this.cameras.main;

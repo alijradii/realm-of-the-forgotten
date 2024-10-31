@@ -10,10 +10,12 @@ class Player extends Fighter {
 
     this.speed = 200;
     this.damage = 5;
+    this.hp = 5;
+    this.isDead = false
   }
 
   update() {
-    if (this.isLocked) return;
+    if (this.isLocked || this.isDead) return;
 
     let direction = this.direction;
 
@@ -72,10 +74,16 @@ class Player extends Fighter {
   }
 
   idle() {
+    if(this.isLocked)
+      return;
+
     this.state = "idle";
   }
 
   attack() {
+    if(this.isDead)
+      return;
+
     if (this.state == "attack") return;
 
     this.state = "attack";
@@ -102,5 +110,27 @@ class Player extends Fighter {
         arrow.fire(this.sprite.x, this.sprite.y, this, 1);
       }
     }
+  }
+
+  onTakeDamage() {
+    if (this.isInvincible) {
+      return;
+    }
+
+    this.hp -= 1
+    if (this.hp <= 0) this.die();
+
+    this.isInvincible = true;
+
+    this.scene.time.delayedCall(200, () => {
+      this.isInvincible = false;
+    });
+  }
+
+  die() {
+    if(this.isDead) return;
+
+    this.isDead = true
+    this.play(`death_${this.direction}`)
   }
 }

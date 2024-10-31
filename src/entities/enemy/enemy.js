@@ -87,6 +87,10 @@ class Enemy extends Fighter {
     if (this.isAttacking) return;
     this.isAttacking = true;
 
+    const player = this.scene.player.sprite;
+    if(player.isDead)
+      return
+
     this.play(`attack_${this.direction}`, true);
 
     this.sprite.on("animationcomplete", () => {
@@ -94,7 +98,6 @@ class Enemy extends Fighter {
       this.isAttacking = false;
     });
 
-    const player = this.scene.player.sprite;
     if (this.baseClass != "Archer") {
       this.updateDirection(player.x, player.y);
 
@@ -133,7 +136,9 @@ class Enemy extends Fighter {
     this.play(`death_${this.direction}`);
 
     this.sprite.on("animationcomplete", () => {
-      this.sprite.destroy(true);
+      this.scene.time.delayedCall(200, () => {
+        this.sprite.destroy(true);
+      });
     });
   }
 }
