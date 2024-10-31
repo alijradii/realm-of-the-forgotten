@@ -45,11 +45,9 @@
 .filled-btn {
     background-color: #86B049;
     color: black;
-    height: 45px;
-    padding: 0 25px;
-    border-radius: 100px;
-    font-weight: bold;
-    transition: all 0.3s;
+    padding: 0 20px;
+    border-radius: 50px;
+    transition: all 0.2s;
 }
 
 .filled-btn:hover {
