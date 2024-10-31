@@ -53,7 +53,7 @@ function generateMaze(rows, cols, pathWidth, start, end) {
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
-      if(r < start[0] - 1 || r >= end[0] || c < start[1] - 1 || c >= end[1]){
+      if(r < start[0] - 1 || r > end[0] || c < start[1] - 1 || c > end[1]){
         maze[r][c] = 0;
       }
       if (r % (pathWidth + 1) != 0 && c % (pathWidth + 1) != 0) {

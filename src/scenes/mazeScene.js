@@ -13,12 +13,12 @@ class MazeScene extends Phaser.Scene {
     this.tilemap;
     this.mainTilemapLayer;
 
-    this.rows = 100;
-    this.cols = 100;
+    this.rows = 140;
+    this.cols = 140;
     this.start = [20, 20];
     this.end = [this.rows - 20, this.cols - 20];
 
-    this.pathWidth = 1 + Math.floor(Math.random() * 5);
+    this.pathWidth = 1 + Math.floor(Math.random() * 4);
     this.startRow;
     this.startCol;
     this.endRow;
@@ -62,6 +62,7 @@ class MazeScene extends Phaser.Scene {
       [this.startRow, this.startCol],
       [this.endRow, this.endCol]
     );
+
     this.tiles = replaceWalls(this.maze);
 
     this.tilemap = this.make.tilemap({
@@ -86,17 +87,29 @@ class MazeScene extends Phaser.Scene {
     );
 
     this.camera = this.cameras.main;
-    this.camera.zoom = 1.6;
+    this.camera.zoom = 1.6
     this.camera.startFollow(this.player.sprite);
     this.physics.add.collider(this.player, this.mainTilemapLayer);
   }
 
   initEnemies() {
-    this.enemies = [new Enemy(this, 64, 64, "Thief")];
+    this.enemies = [];
 
-    this.enemies.forEach((enemy) => {
+    for (let i = 0; i < 30; i++) {
+      const baseClass = chooseRandomElement(classes);
+
+      let r =
+        Math.floor(Math.random() * (this.endRow - this.startRow)) + this.startRow;
+      let c =
+        Math.floor(Math.random() * (this.endCol - this.startCol)) + this.startCol;
+
+      r = r - (r % (this.pathWidth + 1)) + 1;
+      c = r - (c % (this.pathWidth + 1)) + 1;
+
+      const enemy = new Enemy(this, r * 16, c * 16, baseClass);
       this.physics.add.collider(enemy, this.mainTilemapLayer);
-    });
+      this.enemies.push(enemy);
+    }
   }
 
   initPooledObjects() {

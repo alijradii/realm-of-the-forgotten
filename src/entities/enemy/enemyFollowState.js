@@ -55,6 +55,10 @@ class EnemyFollowState {
         this.scene.player.sprite.y,
         0.2
       );
+      this.entity.updateDirection(
+        this.scene.player.sprite.x,
+        this.scene.player.sprite.y
+      );
       return;
     }
 

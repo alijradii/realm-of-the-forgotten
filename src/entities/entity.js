@@ -23,7 +23,6 @@ class Entity {
       this.sprite.x,
       this.sprite.y
     );
-    console.log(angle);
 
     const knockbackX = Math.cos(angle) * 100;
     const knockbackY = Math.sin(angle) * 100;
