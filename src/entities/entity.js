@@ -10,6 +10,7 @@ class Entity {
     this.isLocked = false;
     this.isDead = false;
     this.isInvincible = false;
+    this.damage = 5
   }
 
   getKnockback(attacker) {
@@ -20,7 +21,7 @@ class Entity {
       attacker.x,
       attacker.y,
       this.sprite.x,
-      this.sprite.y,
+      this.sprite.y
     );
     console.log(angle);
 

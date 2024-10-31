@@ -10,7 +10,7 @@ class EnemyMoveState {
       this.entity.sprite.x,
       this.entity.sprite.y,
       x,
-      y,
+      y
     );
 
     if (!path) {
