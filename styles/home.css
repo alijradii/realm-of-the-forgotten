@@ -4,9 +4,7 @@
     box-sizing: border-box;
   }
 
-  ul{
-    list-style-type:none;
-  }
+
 
   @font-face {
     font-family: "Mona Sans";
@@ -38,6 +36,7 @@
     
   }
   .nav-text {
+    list-style-type:none;
     font-family: 'Mona Sans',sans-serif;
 
     gap: 200px;
@@ -115,9 +114,11 @@
   .card{
     width: 370px;
     height: 500px;
-    padding: 20px;
+    padding: 20px 40px;
     align-items: center;
-    text-align: center;
+    
+    border-radius: 50px;
+    box-shadow: 3px 3px 3px 3px #86B049;
   }
 
   .card img{
@@ -131,4 +132,5 @@
 
   .card ul{
     margin-top: 20px;
+    line-height: 26px;
   }
