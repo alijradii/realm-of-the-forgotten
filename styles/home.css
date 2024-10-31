@@ -102,9 +102,17 @@
 
   .tutorial-heading{
     font-family: 'Games', sans-serif;
-    margin: 20px;
+    margin: 30px;
     font-size:xx-large;
     letter-spacing: 2px;
     font-weight: 600;
   }
-  
+
+  .cards{
+    justify-content: space-around;
+  }
+
+  .card{
+    width: 370px;
+    height: 500px;
+  }
