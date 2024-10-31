@@ -41,7 +41,7 @@
     font-family: 'Mona Sans',sans-serif;
 
     gap: 200px;
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 600;
     justify-content: center;
   }
@@ -102,8 +102,8 @@
 
   .tutorial-heading{
     font-family: 'Games', sans-serif;
-    margin: 30px;
-    font-size:xx-large;
+    margin: 40px;
+    font-size:38px;
     letter-spacing: 2px;
     font-weight: 600;
   }
@@ -116,4 +116,19 @@
     width: 370px;
     height: 500px;
     padding: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .card img{
+    width: 200px;
+    height: 200px;
+    
+  }
+  .card h2{
+    font-size: 28px;
+  }
+
+  .card ul{
+    margin-top: 20px;
   }

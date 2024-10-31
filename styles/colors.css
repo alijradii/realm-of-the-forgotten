@@ -25,3 +25,7 @@ color: #0d0c22;
 .white-txt {
 color: white;
 }
+
+.game-text{
+    font-family: 'Games', sans-serif;
+}
