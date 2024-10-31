@@ -31,10 +31,10 @@
 
 
   .logo{
+    display: flex;
     margin: 5px 5px;
-    width: 230px;
+    width: 180px;
     justify-content: space-around
-    
   }
   .nav-text {
     list-style-type:none;
@@ -99,7 +99,7 @@
   }
 
   .tutorial{
-    height: 100vh;
+    height: 185vh;
   }
 
   .tutorial-heading{
@@ -148,6 +148,7 @@
 
   .video-container{
     padding: 20px 35px;
+    height: 100vh;
   }
 
   .video-container img{
@@ -156,5 +157,9 @@
     object-fit: cover;
     padding: 20px;
     border-radius: 10px;
-    opacity: 0.9;
+    opacity: 0.6;
+  }
+
+  .about{
+    height: 80vh;
   }
