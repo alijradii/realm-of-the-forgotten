@@ -161,5 +161,16 @@
   }
 
   .about{
+    color: black;
+    padding: 100px 200px;
+    font-weight: 100;
     height: 80vh;
+    gap: 60px;
+    font-size: xx-large;
+    text-align: center;
+  }
+  .about img{
+    width: 100px;
+    height: 100px;
+    
   }
