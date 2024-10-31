@@ -14,7 +14,7 @@ class Enemy extends Fighter {
 
   update() {
     if (this.isAttacking || this.isLocked || this.isDead) return;
-    console.log(this.state.animation);
+
     this.state.update();
     this.updateAnimation();
   }
@@ -66,7 +66,6 @@ class Enemy extends Fighter {
     );
 
     if (this.sightRange * 16 > dist) {
-      console.log(dist);
       this.changeState(new EnemyFollowState(this.scene, this));
     }
   }
@@ -81,7 +80,6 @@ class Enemy extends Fighter {
   }
 
   moveTo(x, y) {
-    console.log(`current: ${this.sprite.x} ${this.sprite.y}, new: ${x} ${y}`);
     this.changeState(new EnemyMoveState(this.scene, this, x, y));
   }
 
@@ -120,7 +118,6 @@ class Enemy extends Fighter {
 
     this.hp -= attacker.damage;
     if (this.hp <= 0) this.die();
-    console.log(`HP: ${this.hp}`);
 
     this.isLocked = true;
     this.isInvincible = true;

@@ -1,5 +1,5 @@
-function generateMaze(rows, cols, pathWidth) {
-  const stack = [[1, 1]];
+function generateMaze(rows, cols, pathWidth, start, end) {
+  const stack = [start];
   const maze = createGrid(rows, cols, 1);
   const visited = createGrid(rows, cols, 0);
 
@@ -13,10 +13,10 @@ function generateMaze(rows, cols, pathWidth) {
       const nc = c + dir[1] * (pathWidth + 1);
 
       if (
-        nr >= 0 &&
-        nr < rows &&
-        nc >= 0 &&
-        nc < cols &&
+        nr >= start[0] &&
+        nr < end[0] &&
+        nc >= start[1] &&
+        nc < end[1] &&
         visited[nr][nc] === 0
       ) {
         availableDirs.push(dir);
@@ -53,6 +53,9 @@ function generateMaze(rows, cols, pathWidth) {
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
+      if(r < start[0] - 1 || r >= end[0] || c < start[1] - 1 || c >= end[1]){
+        maze[r][c] = 0;
+      }
       if (r % (pathWidth + 1) != 0 && c % (pathWidth + 1) != 0) {
         maze[r][c] = 0;
       }

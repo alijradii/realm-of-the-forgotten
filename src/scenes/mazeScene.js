@@ -10,6 +10,12 @@ class MazeScene extends Phaser.Scene {
     this.cursors;
     this.maze;
     this.tiles;
+
+    this.rows = 100;
+    this.cols = 100;
+    this.start = [20, 20];
+    this.end = [this.rows - 1, this.cols - 1];
+    this.pathWidth = 1 + Math.floor(Math.random() * 5)
   }
 
   preload() {
@@ -19,11 +25,20 @@ class MazeScene extends Phaser.Scene {
 
   create() {
     loadAnimations(this);
-    this.rows = 200;
-    this.cols = 200;
-    this.pathWidth = 5;
 
-    this.maze = generateMaze(this.rows, this.cols, this.pathWidth);
+    const r = this.start[0] - (this.start[0] % (this.pathWidth + 1)) + 1;
+    const c = this.start[1] - (this.start[1] % (this.pathWidth + 1)) + 1;
+
+    const endR = this.end[0] - 20 - (this.end[0] % (this.pathWidth + 1));
+    const endC = this.end[1] - 20 - (this.end[1] % (this.pathWidth + 1));
+
+    this.maze = generateMaze(
+      this.rows,
+      this.cols,
+      this.pathWidth,
+      [r, c],
+      [endR, endC]
+    );
     this.tiles = replaceWalls(this.maze);
 
     const tilemap = this.make.tilemap({
@@ -34,15 +49,21 @@ class MazeScene extends Phaser.Scene {
 
     tilemap.addTilesetImage("tiles", "tiles", 16, 16, 1, 2);
     const layer = tilemap.createLayer(0, "tiles", 0, 0);
-    layer.setCollisionBetween(11, 14);
-
     initCursors(this);
 
-    this.player = new Player(this, 32, 32, "Blue", "Archer");
+    this.player = new Player(
+      this,
+      (c + 1) * 16,
+      (r + 1) * 16,
+      "Blue",
+      "Archer"
+    );
+
+    console.log(`${this.player.sprite.x} ${this.player.sprite.y}`)
     this.enemies = [new Enemy(this, 64, 64, "Thief")];
 
     this.camera = this.cameras.main;
-    this.camera.zoom = 1.6;
+    this.camera.zoom = 1.6
     this.camera.startFollow(this.player.sprite);
 
     layer.setCollision([12, 13, 14, 32, 33, 34, 52, 72]);
