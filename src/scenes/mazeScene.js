@@ -10,12 +10,19 @@ class MazeScene extends Phaser.Scene {
     this.cursors;
     this.maze;
     this.tiles;
+    this.tilemap;
+    this.mainTilemapLayer;
 
     this.rows = 100;
     this.cols = 100;
     this.start = [20, 20];
-    this.end = [this.rows - 1, this.cols - 1];
-    this.pathWidth = 1 + Math.floor(Math.random() * 5)
+    this.end = [this.rows - 20, this.cols - 20];
+
+    this.pathWidth = 1 + Math.floor(Math.random() * 5);
+    this.startRow;
+    this.startCol;
+    this.endRow;
+    this.endCol;
   }
 
   preload() {
@@ -25,50 +32,74 @@ class MazeScene extends Phaser.Scene {
 
   create() {
     loadAnimations(this);
+    this.generate();
+    initCursors(this);
+    this.initPooledObjects();
+    this.initPlayer();
+    this.initEnemies();
+    this.initHitChecks();
+  }
 
-    const r = this.start[0] - (this.start[0] % (this.pathWidth + 1)) + 1;
-    const c = this.start[1] - (this.start[1] % (this.pathWidth + 1)) + 1;
+  update(time, delta) {
+    this.player.update();
 
-    const endR = this.end[0] - 20 - (this.end[0] % (this.pathWidth + 1));
-    const endC = this.end[1] - 20 - (this.end[1] % (this.pathWidth + 1));
+    this.enemies.forEach((enemy) => {
+      enemy.update();
+    });
+  }
+
+  generate() {
+    this.startRow = this.start[0] - (this.start[0] % (this.pathWidth + 1)) + 1;
+    this.startCol = this.start[1] - (this.start[1] % (this.pathWidth + 1)) + 1;
+
+    this.endRow = this.end[0] - 20 - (this.end[0] % (this.pathWidth + 1));
+    this.endCol = this.end[1] - 20 - (this.end[1] % (this.pathWidth + 1));
 
     this.maze = generateMaze(
       this.rows,
       this.cols,
       this.pathWidth,
-      [r, c],
-      [endR, endC]
+      [this.startRow, this.startCol],
+      [this.endRow, this.endCol]
     );
     this.tiles = replaceWalls(this.maze);
 
-    const tilemap = this.make.tilemap({
+    this.tilemap = this.make.tilemap({
       data: this.tiles,
       tileWidth: 16,
       tileHeight: 16,
     });
 
-    tilemap.addTilesetImage("tiles", "tiles", 16, 16, 1, 2);
-    const layer = tilemap.createLayer(0, "tiles", 0, 0);
-    initCursors(this);
+    this.tilemap.addTilesetImage("tiles", "tiles", 16, 16, 1, 2);
 
+    this.mainTilemapLayer = this.tilemap.createLayer(0, "tiles", 0, 0);
+    this.mainTilemapLayer.setCollision([12, 13, 14, 32, 33, 34, 52, 72]);
+  }
+
+  initPlayer() {
     this.player = new Player(
       this,
-      (c + 1) * 16,
-      (r + 1) * 16,
+      (this.startCol + 1) * 16,
+      (this.startRow + 1) * 16,
       "Blue",
       "Archer"
     );
 
-    console.log(`${this.player.sprite.x} ${this.player.sprite.y}`)
+    this.camera = this.cameras.main;
+    this.camera.zoom = 1.6;
+    this.camera.startFollow(this.player.sprite);
+    this.physics.add.collider(this.player, this.mainTilemapLayer);
+  }
+
+  initEnemies() {
     this.enemies = [new Enemy(this, 64, 64, "Thief")];
 
-    this.camera = this.cameras.main;
-    this.camera.zoom = 1.6
-    this.camera.startFollow(this.player.sprite);
+    this.enemies.forEach((enemy) => {
+      this.physics.add.collider(enemy, this.mainTilemapLayer);
+    });
+  }
 
-    layer.setCollision([12, 13, 14, 32, 33, 34, 52, 72]);
-    this.physics.add.collider(this.player, layer);
-
+  initPooledObjects() {
     this.arrows = this.physics.add.group({
       classType: Arrow,
       runChildUpdate: true,
@@ -76,18 +107,16 @@ class MazeScene extends Phaser.Scene {
 
     this.physics.add.collider(
       this.arrows,
-      layer,
+      this.mainTilemapLayer,
       (arrow) => {
         arrow.destroy();
       },
       null,
       this
     );
+  }
 
-    this.enemies.forEach((enemy) => {
-      this.physics.add.collider(enemy, layer);
-    });
-
+  initHitChecks() {
     [...this.enemies, this.player].forEach((entity) => {
       this.physics.add.collider(this.arrows, entity, (target, arrow) => {
         if (target.body == arrow.thrower.body) return;
@@ -100,14 +129,6 @@ class MazeScene extends Phaser.Scene {
           entity.onTakeDamage(arrow);
         });
       });
-    });
-  }
-
-  update(time, delta) {
-    this.player.update();
-
-    this.enemies.forEach((enemy) => {
-      enemy.update();
     });
   }
 }
