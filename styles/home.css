@@ -27,6 +27,7 @@
     height: 60px;
     width: 100%;
     position: fixed;
+    opacity: 0.7;
   }
 
 
@@ -169,6 +170,7 @@
     font-size: xx-large;
     text-align: center;
   }
+
   .about img{
     width: 100px;
     height: 100px;
@@ -177,6 +179,20 @@
 
   .footer{
     height: 15vh;
-    background-color: rgb(46, 48, 31);
+    background-color: black;
     justify-content: space-evenly;
+    color: white;
+    padding: 3vh;
+  }
+
+  .footer ul {
+    list-style-type:none;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .spacing-letter{
+    letter-spacing: 3px;
   }

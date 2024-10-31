@@ -23,7 +23,7 @@
         </div>
         <div class="flex center full-width">
             <ul class="flex full-width nav-text">
-                <li >Tutorial</li>
+                <li id="nav-tutorial">Tutorial</li>
                 <li >Features</li>
                 <li >About</li>
             </ul>
@@ -40,19 +40,19 @@
         </div>
     </div>
 
-    <section class="tutorial full-width grey-bg">
+    <section class="tutorial full-width grey-bg" id="tutorial">
        <div class="tutorial-heading flex center">How to Play</div>
         <div class="cards flex row full-width">
             <div class="card flex column secondary-bg">
-                <img class="pointer-cursor" src="./assets/images/logo-img-2.png" alt="">
-                <h2 class="game-text">Start Tutorial</h2>
+                <img class="pointer-cursor" id="canvas-tutorial" src="./assets/images/logo-img-2.png" alt="">
+                <h2 class="game-text spacing-letter">Start Tutorial</h2>
                 <ul>
                     <li>Click on the canvas</li>
                 </ul>
             </div>
             <div class="card flex column secondary-bg">
                 <img src="./assets/images/logo-img-3.png" alt="">
-                <h2 class="game-text">Controllers</h2>
+                <h2 class="game-text spacing-letter">Controllers</h2>
                 <ul>
                     <li>Use <b>WASD keys</b> for movement</li>
                     <li>Press <b>Left Click</b> to attack</li>
@@ -60,18 +60,18 @@
             </div>
             <div class="card flex column secondary-bg">
                 <img src="./assets/images/logo-img-4.png" alt="">
-                <h2 class="game-text">Instructions</h2>
+                <h2 class="game-text spacing-letter">Instructions</h2>
                 <ul>
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis saepe reiciendis repellat molestias, autem nobis incidunt mollitia obcaecati eligendi? Totam omnis maxime voluptatem voluptas beatae at quia numquam deserunt optio!</li>
                 </ul>
             </div>
         </div>
-        <div class="video-container full-width flex center">
-            <img src="./assets/images/background-image.png" id="video-container"></img>
+        <div class="video-container full-width flex center" id="video-container" >
+            <img src="./assets/images/background-image.png"></img>
         </div>
     </section>
     <section class="about flex column primary-bg">
-        <div class="heading flex center"><h1>About Us</h1></div>
+        <div class="heading flex center game-text spacing-letter"><h1>About Us</h1></div>
         <div class="about-content flex center"><p>Set on a journey to explore the dungeons in the Realm Of The Forgotten. Navigate through the complex rooms of the labyrinth, face powerful foes and explore the secrets behind the ever changing corridors</p></div>
         <div class="about-images flex row center ">
             <img src="./assets/images/About section images/Archer_Red-1.png" alt="">
@@ -83,10 +83,12 @@
     </section>
 
     <footer class="flex footer full-width">
-        <ul>
+        <ul class="flex row full-width game-text">
             <li>Start Game</li>
             <li>Tutorial</li>
         </ul>
     </footer>
+
+    <script src="./scripts/home.js"></script>
 </body>
 </html>
