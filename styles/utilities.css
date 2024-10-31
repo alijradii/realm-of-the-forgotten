@@ -35,6 +35,13 @@
     justify-content: center;
 }
 
+.full-width{
+    width: 100%;
+
+}
+.listing{
+    margin: 30px;
+}
 .filled-btn {
     background-color: #86B049;
     color: black;
