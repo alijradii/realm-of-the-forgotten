@@ -1,6 +1,6 @@
 class MainScreenScene extends Phaser.Scene {
   constructor() {
-    super({ key: "mainScreen" });
+    super({ key: "mainScene" });
   }
 
   preload() {
@@ -76,7 +76,7 @@ class MainScreenScene extends Phaser.Scene {
           this.registry.set("selectedCharacter", classes[i]);
 
           usernameInput.remove();
-          this.scene.start("maze");
+          this.scene.start("mazeScene");
         } else {
           alert("Please enter a username before selecting a character.");
         }
@@ -100,7 +100,7 @@ const mainScreenConfig = {
       debug: false,
     },
   },
-  scene: [MainScreenScene, MazeScene],
+  scene: [MainScreenScene, MazeScene, WinScene, LoseScene],
 
   canvas: document.getElementById("gameCanvas"),
 };

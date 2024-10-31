@@ -132,8 +132,8 @@ class Enemy extends Fighter {
   }
 
   die() {
-    this.isDead = true;
     this.play(`death_${this.direction}`);
+    this.isDead = true;
 
     this.sprite.on("animationcomplete", () => {
       this.scene.time.delayedCall(200, () => {

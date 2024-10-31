@@ -1,6 +1,6 @@
 class MazeScene extends Phaser.Scene {
   constructor(key) {
-    super({ key: "maze" });
+    super({ key: "mazeScene" });
 
     this.player;
     this.rows;
@@ -18,7 +18,7 @@ class MazeScene extends Phaser.Scene {
     this.start = [20, 20];
     this.end = [this.rows - 20, this.cols - 20];
 
-    this.pathWidth = 1 + Math.floor(Math.random() * 4);
+    this.pathWidth = 2 + Math.floor(Math.random() * 3);
     this.startRow;
     this.startCol;
     this.endRow;
@@ -35,7 +35,9 @@ class MazeScene extends Phaser.Scene {
 
   create() {
     this.username = this.registry.get("username");
-    this.selectedCharacter = this.registry.get("selectedCharacter").split("_")[0];
+    this.selectedCharacter = this.registry
+      .get("selectedCharacter")
+      .split("_")[0];
 
     loadAnimations(this);
     this.generate();
@@ -95,7 +97,12 @@ class MazeScene extends Phaser.Scene {
     this.camera = this.cameras.main;
     this.camera.zoom = 1.6;
     this.camera.startFollow(this.player.sprite);
-    this.physics.add.collider(this.player, this.mainTilemapLayer);
+    this.physics.add.collider(this.player, this.mainTilemapLayer, ()=> {
+      if(this.player.state == "dash") {
+        this.player.state = "idle"
+        this.player.update();
+      }
+    });
   }
 
   initEnemies() {
@@ -106,10 +113,12 @@ class MazeScene extends Phaser.Scene {
 
       let r =
         Math.floor(Math.random() * (this.endRow - this.startRow)) +
-        this.startRow;
+        this.startRow +
+        1;
       let c =
         Math.floor(Math.random() * (this.endCol - this.startCol)) +
-        this.startCol;
+        this.startCol +
+        1;
 
       r = r - (r % (this.pathWidth + 1)) + 1;
       c = r - (c % (this.pathWidth + 1)) + 1;
@@ -151,6 +160,18 @@ class MazeScene extends Phaser.Scene {
         });
       });
     });
+  }
+
+  onWinGame() {
+    this.registry.set("username", this.username);
+    this.registry.set("selectedCharacter", this.selectedCharacter);
+    this.scene.start("winScene");
+  }
+
+  onLoseGame() {
+    this.registry.set("username", this.username);
+    this.registry.set("selectedCharacter", this.selectedCharacter);
+    this.scene.start("loseScene");
   }
 }
 

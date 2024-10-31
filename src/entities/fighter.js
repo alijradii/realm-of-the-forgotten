@@ -18,6 +18,8 @@ class Fighter extends Entity {
   }
 
   play(animation, cancel = true) {
+    if(!this.sprite || !this.sprite.anims) return;
+
     this.sprite.play(this.name + "_" + animation, cancel);
     if (this.direction == "left") this.sprite.setFlipX(true);
     else this.sprite.setFlipX(false);

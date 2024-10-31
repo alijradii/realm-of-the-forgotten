@@ -60,7 +60,6 @@ const fighterAnimTemplate = {
         right: {
             frames: [24, 25, 26, 27],
         },
-        repeat: 0,
     },
 };
 

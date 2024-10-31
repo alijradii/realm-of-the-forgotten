@@ -43,25 +43,6 @@ class EnemyFollowState {
       return;
     }
 
-    if (dist < 40) {
-      this.entity.sprite.x = Phaser.Math.Linear(
-        this.entity.sprite.x,
-        this.scene.player.sprite.x,
-        0.2
-      );
-
-      this.entity.sprite.y = Phaser.Math.Linear(
-        this.entity.sprite.y,
-        this.scene.player.sprite.y,
-        0.2
-      );
-      this.entity.updateDirection(
-        this.scene.player.sprite.x,
-        this.scene.player.sprite.y
-      );
-      return;
-    }
-
     this.updateCounter++;
     if (this.updateCounter >= this.updateInterval) {
       this.updateCounter = 0;

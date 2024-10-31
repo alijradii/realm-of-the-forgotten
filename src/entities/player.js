@@ -11,13 +11,17 @@ class Player extends Fighter {
     this.speed = 200;
     this.damage = 5;
     this.hp = 5;
-    this.isDead = false
+    this.isDead = false;
   }
 
   update() {
     if (this.isLocked || this.isDead) return;
 
     let direction = this.direction;
+    if (this.state == "dash"
+    ) {
+      return;
+    }
 
     if (this.state === "idle" || this.state === "walk") {
       this.state = "idle";
@@ -60,7 +64,29 @@ class Player extends Fighter {
         console.log("middle click");
         break;
       case 2:
-        console.log("right click");
+        if (this.state != "dash") {
+          this.state = "dash";
+          console.log("right click");
+
+          if (this.scene.cursors.left.isDown) {
+            this.body.setVelocityX(-this.speed * 2.4);
+            this.direction = "left";
+          } else if (this.scene.cursors.right.isDown) {
+            this.body.setVelocityX(this.speed * 2.4);
+            this.direction = "right";
+          }
+          if (this.scene.cursors.up.isDown) {
+            this.body.setVelocityY(-this.speed * 2.4);
+            this.direction = "up";
+          } else if (this.scene.cursors.down.isDown) {
+            this.body.setVelocityY(this.speed * 2.4);
+            this.direction = "down";
+          } else return;
+
+          this.scene.time.delayedCall(200, () => {
+            this.state = "idle";
+          });
+        }
         break;
     }
   }
@@ -74,15 +100,13 @@ class Player extends Fighter {
   }
 
   idle() {
-    if(this.isLocked)
-      return;
+    if (this.isLocked) return;
 
     this.state = "idle";
   }
 
   attack() {
-    if(this.isDead)
-      return;
+    if (this.isDead) return;
 
     if (this.state == "attack") return;
 
@@ -101,8 +125,8 @@ class Player extends Fighter {
       this.scene.physics.overlap(this, targets, (attacker, target) => {
         if (target.isDead) return;
 
-        target.onTakeDamage(this);
         target.getKnockback(this.sprite);
+        target.onTakeDamage(this);
       });
     } else {
       const arrow = this.scene.arrows.get();
@@ -117,7 +141,7 @@ class Player extends Fighter {
       return;
     }
 
-    this.hp -= 1
+    this.hp -= 1;
     if (this.hp <= 0) this.die();
 
     this.isInvincible = true;
@@ -128,9 +152,13 @@ class Player extends Fighter {
   }
 
   die() {
-    if(this.isDead) return;
+    if (this.isDead) return;
 
-    this.isDead = true
-    this.play(`death_${this.direction}`)
+    this.isDead = true;
+    this.play(`death_${this.direction}`);
+
+    this.scene.time.delayedCall(200, () => {
+      this.scene.onLoseGame();
+    });
   }
 }
