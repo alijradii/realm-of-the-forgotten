@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Mona Sans',sans-serif;
   }
 
   ul{
@@ -18,6 +17,9 @@
     font-family: "Mona Sans";
     src: url("./../../assets/fonts/mona_sans/Mona-Sans-SemiBold.ttf");
     font-weight: bold;
+  }
+  body{
+    font-family: 'Mona Sans',sans-serif;
   }
 
   .navbar{
@@ -36,6 +38,8 @@
     
   }
   .nav-text {
+    font-family: 'Mona Sans',sans-serif;
+
     gap: 200px;
     font-size: 18px;
     font-weight: 600;
@@ -91,3 +95,16 @@
     font-size: x-large;
     font-weight: 500;
   }
+
+  .tutorial{
+    height: auto;
+  }
+
+  .tutorial-heading{
+    font-family: 'Games', sans-serif;
+    margin: 20px;
+    font-size:xx-large;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+  
