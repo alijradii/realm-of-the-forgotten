@@ -1,107 +1,82 @@
- // class definition
- class MainScreenScene extends Phaser.Scene {
+class MainScreenScene extends Phaser.Scene {
   constructor() {
-    // naming used for reference
-    super({ key: 'mainScreen' });
+    super({ key: "mainScreen" });
   }
 
-  // loading my sprites
   preload() {
-    this.load.spritesheet("Archer", "./assets/images/Archer/Archer_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("Axe Fighter", "./assets/images/AxeFighter/AxeFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("Axe Knight", "./assets/images/AxeKnight/AxeKnight_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("Lance Knight", "./assets/images/LanceKnight/LanceKnight_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("Spear Fighter", "./assets/images/SpearFighter/SpearFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("Sword Fighter", "./assets/images/SwordFighter/SwordFighter_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("Thief", "./assets/images/Thief/Thief_Blue.png", {frameWidth: 32,frameHeight: 32,});
-    this.load.spritesheet("Wizard", "./assets/images/Wizard/Wizard_Blue.png", {frameWidth: 32,frameHeight: 32,});
-
+    loadAssets(this);
   }
-
-  // creating my scene
 
   create() {
+    loadAnimations(this);
     const { width, height } = this.scale;
-
-    // creating input section for username
     const usernameInput = document.createElement("input");
-    usernameInput.type = "text";
-    usernameInput.placeholder = "Enter your username";
-    usernameInput.style.position = "absolute";
-    usernameInput.style.top = "50%";
-    usernameInput.style.left = "50%";
-    usernameInput.style.transform = "translate(-50%, -50%)";
-    usernameInput.style.fontSize = "20px";
-    usernameInput.style.padding = "5px";
+    usernameInput.setAttribute("class", "username-input")
     document.querySelector(".container").appendChild(usernameInput);
 
-
-    // width and height generated using chatgpt
     const characterPositions = [
-      { x: width / 5, y: height / 3 },          // Left-most character in top row
-      { x: (2 * width) / 5, y: height / 3 },    // 2nd character from left in top row
-      { x: (3 * width) / 5, y: height / 3 },    // Center character in top row
-      { x: (4 * width) / 5, y: height / 3 },    // 2nd from right in top row
-    
-      { x: width / 5, y: (2 * height) / 3 },    // Left-most character in bottom row
-      { x: (2 * width) / 5, y: (2 * height) / 3 }, // 2nd character from left in bottom row
-      { x: (3 * width) / 5, y: (2 * height) / 3 }, // Center character in bottom row
-      { x: (4 * width) / 5, y: (2 * height) / 3 }, // 2nd from right in bottom row
-    ];
-    
-    const characterNames = [
-      "Archer", "Axe Fighter", "Axe Knight", "Lance Knight",
-      "Spear Fighter", "Sword Fighter", "Thief", "Wizard"
+      { x: width / 5, y: height / 3 },
+      { x: (2 * width) / 5, y: height / 3 },
+      { x: (3 * width) / 5, y: height / 3 },
+      { x: (4 * width) / 5, y: height / 3 },
+
+      { x: width / 5, y: (2 * height) / 3 },
+      { x: (2 * width) / 5, y: (2 * height) / 3 },
+      { x: (3 * width) / 5, y: (2 * height) / 3 },
+      { x: (4 * width) / 5, y: (2 * height) / 3 },
     ];
 
-    this.add.text(width / 2, height / 10, 'Choose Your Character', {
-      fontSize: '32px',
-      color: '#000000'
-    }).setOrigin(0.5);
+    this.add
+      .text(width / 2, height / 10, "Choose Your Character", {
+        fontSize: "32px",
+        color: "#000000",
+      })
+      .setOrigin(0.5);
 
     this.characters = [];
     for (let i = 0; i < 8; i++) {
       const { x, y } = characterPositions[i];
-      const character = this.add.sprite(x, y, characterNames[i]).setInteractive();
+      const character = this.add
+        .sprite(x, y, classes[i] + "_Blue")
+        .setInteractive();
       character.setScale(3);
       this.characters.push(character);
 
-      this.add.text(x, y + 40, characterNames[i], {
-        fontSize: '16px',
-        color: '#000000',
-        align: 'center'
-      }).setOrigin(0.5);
-
+      this.add
+        .text(x, y + 40, classes[i], {
+          fontSize: "16px",
+          color: "#000000",
+          align: "center",
+        })
+        .setOrigin(0.5);
 
       this.tweens.add({
         targets: character,
         scale: 1.2,
         duration: 500,
         yoyo: true,
-        ease: 'Bounce.easeOut',
+        ease: "Bounce.easeOut",
       });
 
-      // on click eventListener
       character.on("pointerdown", () => {
-        this.selectCharacter(characterNames[i]);
+        this.selectCharacter(classes[i]);
         this.tweens.add({
           targets: character,
           scale: 1.4,
           duration: 200,
           yoyo: true,
-          ease: 'Power2',
+          ease: "Power2",
         });
       });
 
       character.on("pointerdown", () => {
         const username = usernameInput.value.trim();
         if (username) {
-          // save username and character for later scenes
           this.registry.set("username", username);
-          this.registry.set("selectedCharacter", characterNames[i]);
-          
+          this.registry.set("selectedCharacter", classes[i]);
+
           usernameInput.remove();
-          this.scene.start("mazeScene"); 
+          this.scene.start("maze");
         } else {
           alert("Please enter a username before selecting a character.");
         }
@@ -111,14 +86,13 @@
 
   selectCharacter(characterKey) {
     console.log(`Selected character: ${characterKey}`);
-
   }
 }
 
-const config = {
+const mainScreenConfig = {
   type: Phaser.WEBGL,
-  width: 800,
-  height: 600,
+  width: WIDTH,
+  height: HEIGHT,
   backgroundColor: "#f5f5f5",
   physics: {
     default: "arcade",
@@ -126,11 +100,7 @@ const config = {
       debug: false,
     },
   },
-  scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-  },
-  scene: [MainScreenScene],
-};
+  scene: [MainScreenScene, MazeScene],
 
-const game = new Phaser.Game(config);
+  canvas: document.getElementById("gameCanvas"),
+};

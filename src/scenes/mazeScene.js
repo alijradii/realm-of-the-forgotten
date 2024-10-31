@@ -23,6 +23,9 @@ class MazeScene extends Phaser.Scene {
     this.startCol;
     this.endRow;
     this.endCol;
+
+    this.username;
+    this.selectedCharacter;
   }
 
   preload() {
@@ -31,6 +34,9 @@ class MazeScene extends Phaser.Scene {
   }
 
   create() {
+    this.username = this.registry.get("username");
+    this.selectedCharacter = this.registry.get("selectedCharacter").split("_")[0];
+
     loadAnimations(this);
     this.generate();
     initCursors(this);
@@ -83,11 +89,11 @@ class MazeScene extends Phaser.Scene {
       (this.startCol + 1) * 16,
       (this.startRow + 1) * 16,
       "Blue",
-      "LanceKnight"
+      this.selectedCharacter
     );
 
     this.camera = this.cameras.main;
-    this.camera.zoom = 1.6
+    this.camera.zoom = 1.6;
     this.camera.startFollow(this.player.sprite);
     this.physics.add.collider(this.player, this.mainTilemapLayer);
   }
@@ -99,9 +105,11 @@ class MazeScene extends Phaser.Scene {
       const baseClass = chooseRandomElement(classes);
 
       let r =
-        Math.floor(Math.random() * (this.endRow - this.startRow)) + this.startRow;
+        Math.floor(Math.random() * (this.endRow - this.startRow)) +
+        this.startRow;
       let c =
-        Math.floor(Math.random() * (this.endCol - this.startCol)) + this.startCol;
+        Math.floor(Math.random() * (this.endCol - this.startCol)) +
+        this.startCol;
 
       r = r - (r % (this.pathWidth + 1)) + 1;
       c = r - (c % (this.pathWidth + 1)) + 1;
@@ -145,3 +153,18 @@ class MazeScene extends Phaser.Scene {
     });
   }
 }
+
+const mazeSceneConfig = {
+  type: Phaser.WEBGL,
+  width: WIDTH,
+  height: HEIGHT,
+  backgroundColor: "#f5f5f5",
+  physics: {
+    default: "arcade",
+    arcade: {
+      debug: false,
+    },
+  },
+  scene: MazeScene,
+  canvas: document.getElementById("gameCanvas"),
+};

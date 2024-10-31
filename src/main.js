@@ -13,4 +13,4 @@ const config = {
   canvas: document.getElementById("gameCanvas"),
 };
 
-const game = new Phaser.Game(config);
+const game = new Phaser.Game(mainScreenConfig);
