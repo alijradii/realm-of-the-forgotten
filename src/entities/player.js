@@ -10,7 +10,7 @@ class Player extends Fighter {
 
     this.speed = 200;
     this.damage = 5;
-    this.hp = 5;
+    this.hp = 20;
     this.isDead = false;
   }
 

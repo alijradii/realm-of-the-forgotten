@@ -13,12 +13,12 @@ class MazeScene extends Phaser.Scene {
     this.tilemap;
     this.mainTilemapLayer;
 
-    this.rows = 140;
-    this.cols = 140;
+    this.rows = 100;
+    this.cols = 100;
     this.start = [20, 20];
     this.end = [this.rows - 20, this.cols - 20];
 
-    this.pathWidth = 2 + Math.floor(Math.random() * 3);
+    this.pathWidth = 2 + Math.floor(Math.random() * 2);
     this.startRow;
     this.startCol;
     this.endRow;
@@ -26,6 +26,11 @@ class MazeScene extends Phaser.Scene {
 
     this.username;
     this.selectedCharacter;
+
+    this.enemyCount = 10;
+
+    this.enemyCountText;
+    this.playerHpText;
   }
 
   preload() {
@@ -46,14 +51,27 @@ class MazeScene extends Phaser.Scene {
     this.initPlayer();
     this.initEnemies();
     this.initHitChecks();
+    this.initGUI();
   }
 
   update(time, delta) {
     this.player.update();
 
+    console.log(this.enemies.length);
+
     this.enemies.forEach((enemy) => {
       enemy.update();
     });
+
+    this.enemies = this.enemies.filter((enemy) => !enemy.isDead);
+
+    this.enemyCountText.setText(`Enemies: ${this.enemies.length}`);
+    this.playerHpText.setText(`HP: ${this.player.hp}`);
+
+    if (this.enemies.length == 0) {
+      this.onWinGame();
+      return;
+    }
   }
 
   generate() {
@@ -68,7 +86,7 @@ class MazeScene extends Phaser.Scene {
       this.cols,
       this.pathWidth,
       [this.startRow, this.startCol],
-      [this.endRow, this.endCol]
+      [this.endRow, this.endCol],
     );
 
     this.tiles = replaceWalls(this.maze);
@@ -91,15 +109,15 @@ class MazeScene extends Phaser.Scene {
       (this.startCol + 1) * 16,
       (this.startRow + 1) * 16,
       "Blue",
-      this.selectedCharacter
+      this.selectedCharacter,
     );
 
     this.camera = this.cameras.main;
     this.camera.zoom = 1.6;
     this.camera.startFollow(this.player.sprite);
-    this.physics.add.collider(this.player, this.mainTilemapLayer, ()=> {
-      if(this.player.state == "dash") {
-        this.player.state = "idle"
+    this.physics.add.collider(this.player, this.mainTilemapLayer, () => {
+      if (this.player.state == "dash") {
+        this.player.state = "idle";
         this.player.update();
       }
     });
@@ -108,17 +126,17 @@ class MazeScene extends Phaser.Scene {
   initEnemies() {
     this.enemies = [];
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < this.enemyCount; i++) {
       const baseClass = chooseRandomElement(classes);
 
       let r =
-        Math.floor(Math.random() * (this.endRow - this.startRow)) +
+        Math.floor(Math.random() * (this.endRow - this.startRow - 10)) +
         this.startRow +
-        1;
+        5;
       let c =
-        Math.floor(Math.random() * (this.endCol - this.startCol)) +
+        Math.floor(Math.random() * (this.endCol - this.startCol - 10)) +
         this.startCol +
-        1;
+        5;
 
       r = r - (r % (this.pathWidth + 1)) + 1;
       c = r - (c % (this.pathWidth + 1)) + 1;
@@ -142,7 +160,7 @@ class MazeScene extends Phaser.Scene {
         arrow.destroy();
       },
       null,
-      this
+      this,
     );
   }
 
@@ -173,19 +191,24 @@ class MazeScene extends Phaser.Scene {
     this.registry.set("selectedCharacter", this.selectedCharacter);
     this.scene.start("loseScene");
   }
-}
 
-const mazeSceneConfig = {
-  type: Phaser.WEBGL,
-  width: WIDTH,
-  height: HEIGHT,
-  backgroundColor: "#f5f5f5",
-  physics: {
-    default: "arcade",
-    arcade: {
-      debug: false,
-    },
-  },
-  scene: MazeScene,
-  canvas: document.getElementById("gameCanvas"),
-};
+  shutdown() {
+    this.input.keyboard.clearCaptures();
+    this.input.keyboard.removeAllListeners();
+    this.cursors = null;
+  }
+
+  initGUI() {
+    this.enemyCountText = this.add.text(520, 450, "Enemies: 0", {
+      fontSize: "16px",
+      color: "#000020",
+    });
+    this.enemyCountText.setScrollFactor(0, 0);
+
+    this.playerHpText = this.add.text(170, 450, "HP: 100", {
+      fontSize: "16px",
+      color: "#000020",
+    });
+    this.playerHpText.setScrollFactor(0, 0);
+  }
+}

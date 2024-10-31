@@ -8,11 +8,24 @@ class MainScreenScene extends Phaser.Scene {
   }
 
   create() {
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.input.keyboard.clearCaptures()
+
     loadAnimations(this);
+
     const { width, height } = this.scale;
-    const usernameInput = document.createElement("input");
-    usernameInput.setAttribute("class", "username-input")
-    document.querySelector(".container").appendChild(usernameInput);
+
+    let usernameInput = document.querySelector(".username-input");
+    if (!usernameInput) {
+      usernameInput = document.createElement("input");
+      usernameInput.setAttribute("class", "username-input");
+      usernameInput.setAttribute("placeholder", "Enter your username");
+      document.querySelector(".container").appendChild(usernameInput);
+    } else {
+      usernameInput.value = ""; 
+    }
+
+    usernameInput.focus();
 
     const characterPositions = [
       { x: width / 5, y: height / 3 },
