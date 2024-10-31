@@ -18,6 +18,7 @@
   }
   body{
     font-family: 'Mona Sans',sans-serif;
+    background-color: #f3f3f6;
   }
 
   .navbar{
@@ -79,6 +80,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     gap: 40px;
+    word-spacing: 3px;
+    letter-spacing: 2px;
   }
 
   .head{
@@ -96,7 +99,7 @@
   }
 
   .tutorial{
-    height: auto;
+    height: 100vh;
   }
 
   .tutorial-heading{
@@ -117,13 +120,17 @@
     padding: 20px 40px;
     align-items: center;
     
-    border-radius: 50px;
+    border-radius: 20px;
     box-shadow: 3px 3px 3px 3px #86B049;
   }
 
   .card img{
     width: 200px;
     height: 200px;
+    
+  }
+  .pointer-cursor:hover{
+    cursor: pointer;
     
   }
   .card h2{
@@ -133,4 +140,21 @@
   .card ul{
     margin-top: 20px;
     line-height: 26px;
+  }
+  .card:hover {
+    opacity: 0.9;
+    
+  }
+
+  .video-container{
+    padding: 20px 35px;
+  }
+
+  .video-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 20px;
+    border-radius: 10px;
+    opacity: 0.9;
   }
