@@ -10,6 +10,7 @@ class EnemyIdleState {
   }
 
   update() {
+    if (this.entity.isDead) return;
     if (this.entity.scanForPlayer()) return;
 
     this.updateCounter++;

@@ -24,6 +24,8 @@ class EnemyMoveState {
 
   update() {
     if (this.entity.scanForPlayer()) return;
+    if (this.entity.isDead) return;
+
     if (!this.entity.path) {
       this.entity.idle();
     }
